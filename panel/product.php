@@ -5,6 +5,8 @@ $current_page = 'new-product';
 <?php include ('header.php'); ?>
 <?php
 
+
+
 if (isset($_POST['save'])){
 	$title             = $_POST['product_name'];
 	$content           = $_POST['product_content'];
@@ -12,19 +14,22 @@ if (isset($_POST['save'])){
 	$product_discount  = $_POST['product_discount'];
 	$product_id        = $_POST['id'];
 	$date              = date('Y-m-d H:i:s');
+
+
+	if( $product_id){
+		//update
+	$sql = " UPDATE products SET title = '$title' , content = '$content' , price = $product_price , discount_percent = $product_discount WHERE ID = $product_id ";
+	}else{
+		//insert
+		$sql = "INSERT INTO products ( title , content , thumbnail , price , discount_percent , discount_date , stock , created_at )
+		 VALUES ( '$title' , '$content' , '' , '$product_price' , $product_discount , NULL , 5 , '$date' )
+		";
+	}
+	
+	db()->exec($sql);
 }
 
-if( $product_id){
-	//update
-$sql = " UPDATE products SET title = '$title' , content = '$content' , price = $product_discount , discount_percent = $discount_percent WHERE ID = $product_id ";
-}else{
-	//insert
-	$sql = "INSERT INTO products ( title , content , thumbnail , price , discount_percent , discount_date , stock , created_at )
-	 VALUES ( '$title' , '$content' , '' , '$product_price' , '$product_discount' , NULL , 5 , '$date' )
-	";
-}
 
-db()->exec($sql);
 
 $product_id        = isset($_GET['product_id']) ? $_GET['product_id'] : 0;
 $title             = '';
