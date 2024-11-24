@@ -16,7 +16,7 @@
             <?php
             if( $product['stock'] < 4 )
             {
-                echo $product['stock'] . ' محصول باقی مانده در انبار';
+                echo $product['stock'] . 'محصول باقی مانده ';
             }
             ?>
             <a href="<?php echo url( 'product.php?id=' . $product['ID'] );?>" class="btn btn-primary">Go somewhere</a>
